@@ -1,14 +1,12 @@
 import Clock from './Clock';
-import useSearchParams from './useSearchParams';
 import useTimeOffset from './useTime';
 import './app.css';
 
 export function App() {
-  const { searchParams } = useSearchParams();
   const {
     timeOffset,
     accuracy
-  } = useTimeOffset(searchParams?.get('server'));
+  } = useTimeOffset();
 
   return (
     <>
@@ -16,7 +14,7 @@ export function App() {
         <Clock timeOffset={timeOffset} />
         <div class="offset">
           Time offset: {Math.round(timeOffset * 1000) / 1000}ms
-          (±{accuracy}ms)
+          (±{Math.round(accuracy * 1000) / 1000}ms)
         </div>
       </div>
       <div class={`placeholder ${isNaN(timeOffset) ? '' : 'hide'}`}>Connecting...</div>
