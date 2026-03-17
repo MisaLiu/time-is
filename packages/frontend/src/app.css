@@ -38,3 +38,17 @@
     color: rgba(255, 255, 255, .5);
   }
 }
+
+@media screen and (max-width: 600px) {
+  #app .placeholder {
+    font-size: calc(1rem + 8vw);
+  }
+
+  .clock-container .clock {
+    font-size: calc(1rem + 16vw);
+  }
+
+  .clock-container .offset {
+    font-size: calc(1rem + .10vw);
+  }
+}
