@@ -7,7 +7,7 @@ export function App() {
   const { searchParams } = useSearchParams();
   const {
     timeOffset,
-    fetchCost
+    accuracy
   } = useTimeOffset(searchParams?.get('server'));
 
   return (
@@ -16,7 +16,7 @@ export function App() {
         <Clock timeOffset={timeOffset} />
         <div class="offset">
           Time offset: {Math.round(timeOffset * 1000) / 1000}ms
-          (±{fetchCost}ms)
+          (±{accuracy}ms)
         </div>
       </div>
       <div class={`placeholder ${isNaN(timeOffset) ? '' : 'hide'}`}>Connecting...</div>

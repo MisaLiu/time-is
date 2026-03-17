@@ -18,7 +18,7 @@ app.get('/api/healthcheck', (_, res) => {
 });
 
 app.get('/api/time', (req, res) => {
-  const getRequestTime = performance.now();
+  const serverReceiveTime = Date.now();
 
   const reqTime = parseInt(req.query.reqTime as string);
   if (!reqTime || isNaN(reqTime) || reqTime < 0) {
@@ -56,19 +56,17 @@ app.get('/api/time', (req, res) => {
   }
 
   ntpClient.on(NTP_EVENTS.SYNC, (time) => {
-    const fetchEndTime = performance.now();
+    const serverSendTime = Date.now();
     clearNTPClient();
-
-    const fetchCost = fetchEndTime - fetchStartTime;
-    const totalOffset = (fetchStartTime - getRequestTime) + fetchCost;
 
     res
       .type('json')
       .send({
         msg: 'ok',
         data: {
-          ntpResponseTime: reqTime + totalOffset,
           ntpTime: (new Date(time)).getTime(),
+          serverReceiveTime,
+          serverSendTime,
         }
       });
   });
@@ -84,7 +82,6 @@ app.get('/api/time', (req, res) => {
       });
   });
 
-  const fetchStartTime = performance.now();
   ntpClient.forceUpdate().then().catch();
 });
 
