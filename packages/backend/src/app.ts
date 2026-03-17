@@ -7,6 +7,8 @@ const ntpMaps = new Map<number, NTPClient>();
 
 const app = express();
 
+app.use(express.static('public'));
+
 app.get('/api/healthcheck', (_, res) => {
   res
     .type('json')
