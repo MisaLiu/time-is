@@ -41,6 +41,9 @@ importers:
 
   packages/frontend:
     dependencies:
+      normalize.css:
+        specifier: ^8.0.1
+        version: 8.0.1
       preact:
         specifier: ^10.28.4
         version: 10.29.0
@@ -918,6 +921,9 @@ packages:
 
   node-releases@2.0.36:
     resolution: {integrity: sha512-TdC8FSgHz8Mwtw9g5L4gR/Sh9XhSP/0DEkQxfEFXOpiul5IiHgHan2VhYYb6agDSfp4KuvltmGApc8HMgUrIkA==}
+
+  normalize.css@8.0.1:
+    resolution: {integrity: sha512-qizSNPO93t1YUuUhP22btGOo3chcvDFqFaj2TRybP0DMxkHOCTYwp3n34fel4a31ORXy4m1Xq0Gyqpb5m33qIg==}
 
   nth-check@2.1.1:
     resolution: {integrity: sha512-lqjrjmaOoAnWfMmBPL+XNnynZh2+swxiX3WUE0s4yEHI6m+AwrK2UZOimIRl3X/4QctVqS8AiZjFqyOGrMXb/w==}
@@ -1959,6 +1965,8 @@ snapshots:
       he: 1.2.0
 
   node-releases@2.0.36: {}
+
+  normalize.css@8.0.1: {}
 
   nth-check@2.1.1:
     dependencies:

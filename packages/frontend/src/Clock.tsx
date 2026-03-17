@@ -1,6 +1,12 @@
 import { useRef, useEffect } from 'preact/compat';
 import type { FC } from 'preact/compat';
 
+const fillZero = (number: number, length = 2) => {
+  let result = `${number}`;
+  while (result.length < length) result = `0${result}`;
+  return result;
+}
+
 const Clock: FC<{
   timeOffset: number
 }> = ({ timeOffset }) => {
@@ -9,13 +15,14 @@ const Clock: FC<{
   const lastSecondRef = useRef<number>(NaN);
 
   const updateTimeByTick = () => {
+    if (isNaN(timeOffset)) return;
     if (!domRef.current) return;
 
     const date = new Date(Date.now() + timeOffset);
     if (date.getSeconds() !== lastSecondRef.current) {
-      domRef.current.querySelector<HTMLSpanElement>('.hour')!.innerText = date.getHours().toString();
-      domRef.current.querySelector<HTMLSpanElement>('.minute')!.innerText = date.getMinutes().toString();
-      domRef.current.querySelector<HTMLSpanElement>('.second')!.innerText = date.getSeconds().toString();
+      domRef.current.querySelector<HTMLSpanElement>('.hour')!.innerText = fillZero(date.getHours());
+      domRef.current.querySelector<HTMLSpanElement>('.minute')!.innerText = fillZero(date.getMinutes());
+      domRef.current.querySelector<HTMLSpanElement>('.second')!.innerText = fillZero(date.getSeconds());
 
       lastSecondRef.current = date.getSeconds();
     }
@@ -24,6 +31,8 @@ const Clock: FC<{
   };
 
   useEffect(() => {
+    if (isNaN(timeOffset)) return;
+
     clockRef.current = window.requestAnimationFrame(updateTimeByTick);
 
     (() => {

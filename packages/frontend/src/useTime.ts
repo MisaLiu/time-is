@@ -2,7 +2,7 @@ import { useState, useEffect } from 'preact/hooks';
 import sa from 'superagent';
 
 const useTimeOffset = () => {
-  const [ timeOffset, setTimeOffset ] = useState<number>(0);
+  const [ timeOffset, setTimeOffset ] = useState<number>(NaN);
   const [ fetchError, setFetchError ] = useState(null);
 
   useEffect(() => {
