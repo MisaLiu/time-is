@@ -17,13 +17,24 @@
 .clock-container .clock {
   font-size: calc(1rem + 18vw);
   font-weight: bolder;
-  line-height: .9em;
+  line-height: 1em;
 }
 
 .clock-container .clock .hr::before {
   content: ':';
 }
 
+.clock-container .offset {
+  color: rgba(0, 0, 0, .5);
+  font-size: calc(1rem + .15vw);
+}
+
 .clock-container.hide {
   display: none
+}
+
+@media screen and (prefers-color-scheme: dark) {
+  .clock-container .offset {
+    color: rgba(255, 255, 255, .5);
+  }
 }

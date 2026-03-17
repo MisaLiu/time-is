@@ -3,6 +3,7 @@
 :root {
   color-scheme: dark light;
   user-select: none;
+  font-family: monospace;
 }
 
 body {
