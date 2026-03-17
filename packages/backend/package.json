@@ -17,7 +17,9 @@
     "rollup-plugin-node-externals": "^8.1.2",
     "typescript": "~5.9.3",
     "vite": "^8.0.0",
-    "vite-node": "^6.0.0"
+    "vite-node": "^6.0.0",
+    "vite-plugin-clean": "^2.0.1",
+    "vite-plugin-cp": "^6.0.3"
   },
   "dependencies": {
     "dotenv": "^17.3.1",
