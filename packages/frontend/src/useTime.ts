@@ -11,7 +11,6 @@ const useTimeOffset = (ntpServer?: string | null) => {
     
     sa.get('/api/time')
       .query({
-        reqTime: t0,
         ntpServer,
       })
       .accept('json')

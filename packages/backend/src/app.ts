@@ -20,16 +20,6 @@ app.get('/api/healthcheck', (_, res) => {
 app.get('/api/time', (req, res) => {
   const serverReceiveTime = Date.now();
 
-  const reqTime = parseInt(req.query.reqTime as string);
-  if (!reqTime || isNaN(reqTime) || reqTime < 0) {
-    return res
-      .status(400)
-      .type('json')
-      .send({
-        msg: 'No reqTime provided'
-      });
-  }
-
   const identity = Math.floor(Date.now() / 1000);
   if (ntpMaps.has(identity)) {
     return res
