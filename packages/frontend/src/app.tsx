@@ -1,12 +1,14 @@
 import Clock from './Clock';
+import useSearchParams from './useSearchParams';
 import useTimeOffset from './useTime';
 import './app.css';
 
 export function App() {
+  const { searchParams } = useSearchParams();
   const {
     timeOffset,
     fetchCost
-  } = useTimeOffset();
+  } = useTimeOffset(searchParams?.get('server'));
 
   return (
     <>

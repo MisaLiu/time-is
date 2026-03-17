@@ -1,17 +1,17 @@
 import { useState, useEffect } from 'preact/hooks';
 import sa from 'superagent';
 
-const useTimeOffset = () => {
+const useTimeOffset = (ntpServer?: string | null) => {
   const [ timeOffset, setTimeOffset ] = useState<number>(NaN);
   const [ fetchCost, setFetchCost ] = useState<number>(NaN);
   const [ fetchError, setFetchError ] = useState(null);
 
   useEffect(() => {
     const fetchStartTime = Date.now();
-
     sa.get('/api/time')
       .query({
         reqTime: fetchStartTime,
+        ntpServer,
       })
       .accept('json')
       .then((e) => {
