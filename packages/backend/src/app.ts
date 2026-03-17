@@ -16,7 +16,7 @@ app.get('/api/healthcheck', (_, res) => {
 });
 
 app.get('/api/time', (req, res) => {
-  const getRequestTime = Date.now();
+  const getRequestTime = performance.now();
 
   const reqTime = parseInt(req.query.reqTime as string);
   if (!reqTime || isNaN(reqTime) || reqTime < 0) {
@@ -28,7 +28,7 @@ app.get('/api/time', (req, res) => {
       });
   }
 
-  const identity = Math.floor(getRequestTime / 1000);
+  const identity = Math.floor(Date.now() / 1000);
   if (ntpMaps.has(identity)) {
     return res
       .status(409)
@@ -54,12 +54,11 @@ app.get('/api/time', (req, res) => {
   }
 
   ntpClient.on(NTP_EVENTS.SYNC, (time) => {
-    const fetchEndTime = Date.now();
+    const fetchEndTime = performance.now();
     clearNTPClient();
 
     const fetchCost = fetchEndTime - fetchStartTime;
-    const clientToServerOffset = reqTime - getRequestTime;
-    const totalOffset = (fetchStartTime - getRequestTime) + fetchCost + clientToServerOffset;
+    const totalOffset = (fetchStartTime - getRequestTime) + fetchCost;
 
     res
       .type('json')
@@ -83,7 +82,7 @@ app.get('/api/time', (req, res) => {
       });
   });
 
-  const fetchStartTime = Date.now();
+  const fetchStartTime = performance.now();
   ntpClient.forceUpdate().then().catch();
 });
 

@@ -3,6 +3,7 @@ import sa from 'superagent';
 
 const useTimeOffset = () => {
   const [ timeOffset, setTimeOffset ] = useState<number>(NaN);
+  const [ fetchCost, setFetchCost ] = useState<number>(NaN);
   const [ fetchError, setFetchError ] = useState(null);
 
   useEffect(() => {
@@ -18,6 +19,7 @@ const useTimeOffset = () => {
 
         const ntpOffset = body.data.ntpTime - body.data.ntpResponseTime;
         setTimeOffset(ntpOffset);
+        setFetchCost(Math.abs(Date.now() - fetchStartTime));
       })
       .catch((e) => {
         console.error(e);
@@ -27,6 +29,7 @@ const useTimeOffset = () => {
 
   return {
     timeOffset,
+    fetchCost,
     fetchError,
   };
 };
