@@ -1,7 +1,12 @@
 import { useState, useEffect } from 'preact/hooks';
-import sa from 'superagent';
 
 const REQUEST_COUNT = 4;
+
+const buildApiEndpoint = (ntpServer?: string | null) => {
+  let result = '/api/time';
+  if (ntpServer) result += `?server=${ntpServer}`;
+  return result;
+};
 
 const calculateMedian = (values: number[]) => {
   const sorted = values.slice().sort((a, b) => a - b);
@@ -37,14 +42,12 @@ const useTimeOffset = () => {
       for (let i = 0; i < REQUEST_COUNT; i++) {
         const t0 = Date.now();
 
-        const response = await sa.get('/api/time')
-          .query({
-            ntpServer,
-          })
-          .accept('json');
+        const body = await fetch(buildApiEndpoint(ntpServer), {
+          cache: 'no-cache',
+        }).then(e => e.json());
+        if (body.msg !== 'ok') throw new Error(body.msg);
 
         const t3 = Date.now();
-        const { body } = response;
 
         const t1 = body.data.serverReceiveTime;
         const t2 = body.data.serverSendTime;
