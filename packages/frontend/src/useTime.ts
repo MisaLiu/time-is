@@ -28,7 +28,7 @@ const useTimeOffset = () => {
   const [ timeOffset, setTimeOffset ] = useState<number>(0);
   const [ accuracy, setAccuracy ] = useState<number>(0);
   const [ fetchError, setFetchError ] = useState(null);
-  const [ isFetching, setIsFetching ] = useState(false);
+  const [ isFetching, setIsFetching ] = useState(true);
 
   const fetchMultipleTimes = async (ntpServer?: string | null) => {
     const offsets: number[] = [];
