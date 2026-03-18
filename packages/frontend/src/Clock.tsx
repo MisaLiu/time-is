@@ -16,7 +16,6 @@ const Clock: FC<{
   const lastSecondRef = useRef<number>(NaN);
 
   const updateTimeByTick = () => {
-    if (isNaN(timeOffset)) return;
     if (!hourDomRef.current || !minuteDomRef.current || !secondDomRef.current) return;
 
     if (!dateRef.current) dateRef.current = new Date();
@@ -41,8 +40,6 @@ const Clock: FC<{
   };
 
   useEffect(() => {
-    if (isNaN(timeOffset)) return;
-
     clockRef.current = window.requestAnimationFrame(updateTimeByTick);
 
     (() => {

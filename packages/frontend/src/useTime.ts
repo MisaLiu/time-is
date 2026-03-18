@@ -20,8 +20,8 @@ const calculateStandardDeviation = (values: number[], mean: number) => {
 };
 
 const useTimeOffset = () => {
-  const [ timeOffset, setTimeOffset ] = useState<number>(NaN);
-  const [ accuracy, setAccuracy ] = useState<number>(NaN);
+  const [ timeOffset, setTimeOffset ] = useState<number>(0);
+  const [ accuracy, setAccuracy ] = useState<number>(0);
   const [ fetchError, setFetchError ] = useState(null);
   const [ isFetching, setIsFetching ] = useState(false);
 
