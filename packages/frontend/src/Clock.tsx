@@ -1,30 +1,40 @@
 import { useRef, useEffect } from 'preact/compat';
 import type { FC } from 'preact/compat';
 
-const fillZero = (number: number, length = 2) => {
-  let result = `${number}`;
-  while (result.length < length) result = `0${result}`;
-  return result;
-}
+const fillZero = (number: number, length = 2) => (
+  number.toString().padStart(length, '0')
+);
 
 const Clock: FC<{
   timeOffset: number
 }> = ({ timeOffset }) => {
-  const domRef = useRef<HTMLDivElement>(null);
+  const hourDomRef = useRef<HTMLSpanElement>(null);
+  const minuteDomRef = useRef<HTMLSpanElement>(null);
+  const secondDomRef = useRef<HTMLSpanElement>(null);
   const clockRef = useRef<number>(null);
+  const dateRef = useRef<Date>(null);
   const lastSecondRef = useRef<number>(NaN);
 
   const updateTimeByTick = () => {
     if (isNaN(timeOffset)) return;
-    if (!domRef.current) return;
+    if (!hourDomRef.current || !minuteDomRef.current || !secondDomRef.current) return;
 
-    const date = new Date(Date.now() + timeOffset);
-    if (date.getSeconds() !== lastSecondRef.current) {
-      domRef.current.querySelector<HTMLSpanElement>('.hour')!.innerText = fillZero(date.getHours());
-      domRef.current.querySelector<HTMLSpanElement>('.minute')!.innerText = fillZero(date.getMinutes());
-      domRef.current.querySelector<HTMLSpanElement>('.second')!.innerText = fillZero(date.getSeconds());
+    if (!dateRef.current) dateRef.current = new Date();
+    dateRef.current.setTime(Date.now() + timeOffset);
 
-      lastSecondRef.current = date.getSeconds();
+    const currentSecond = dateRef.current.getSeconds();
+    if (currentSecond !== lastSecondRef.current) {
+      secondDomRef.current.innerText = fillZero(currentSecond);
+
+      const minuteStr = fillZero(dateRef.current.getMinutes());
+      if (minuteDomRef.current.innerText != minuteStr)
+        minuteDomRef.current.innerText = minuteStr;
+
+      const hourStr = fillZero(dateRef.current.getHours());
+      if (hourDomRef.current.innerText != hourStr)
+        hourDomRef.current.innerText = hourStr;
+
+      lastSecondRef.current = currentSecond;
     }
 
     clockRef.current = window.requestAnimationFrame(updateTimeByTick);
@@ -38,16 +48,17 @@ const Clock: FC<{
     (() => {
       if (!clockRef.current) return;
       window.cancelAnimationFrame(clockRef.current);
+      clockRef.current = null;
     });
   }, [timeOffset]);
 
   return (
-    <div class="clock" ref={domRef}>
-      <span class="hour">00</span>
+    <div class="clock">
+      <span class="hour" ref={hourDomRef}>00</span>
       <span class="hr" />
-      <span class="minute">00</span>
+      <span class="minute" ref={minuteDomRef}>00</span>
       <span class="hr" />
-      <span class="second">00</span>
+      <span class="second" ref={secondDomRef}>00</span>
     </div>
   )
 };
