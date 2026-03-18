@@ -37,8 +37,6 @@ const useTimeOffset = () => {
       for (let i = 0; i < REQUEST_COUNT; i++) {
         const t0 = Date.now();
 
-        console.log(i);
-        
         const response = await sa.get('/api/time')
           .query({
             ntpServer,

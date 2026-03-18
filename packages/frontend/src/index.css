@@ -15,3 +15,13 @@ body {
   justify-content: center;
   flex-wrap: nowrap;
 }
+
+.preload {
+  font-size: calc(1rem + 12vw);
+  font-weight: bolder;
+  line-height: .9em;
+}
+
+.preload.hide {
+  display: none;
+}

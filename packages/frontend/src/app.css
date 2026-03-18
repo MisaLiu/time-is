@@ -1,5 +1,5 @@
 #app .placeholder {
-  font-size: calc(1rem + 12vw);
+  font-size: calc(1rem + 10vw);
   font-weight: bolder;
   line-height: .9em;
 }
